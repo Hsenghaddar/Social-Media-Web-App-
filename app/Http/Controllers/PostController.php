@@ -85,7 +85,7 @@ class PostController extends Controller
     public function profile(string $id)
     {
         $user = User::findOrFail($id);
-        $isRequestSent = Friend::where('sender_id', Auth::id())->where('reciever_id', $user->id)->first();
+        $isRequestSent = Friend::where('sender_id', Auth::id())->where('reciever_id', $user->id)->where("status","pending")->first();
         if ($user == Auth::user()) {
             $receivedRequests = Friend::where("reciever_id", Auth::id())->where("status", "pending")->get();
             $sentRequests = Friend::where("sender_id", Auth::id())->where("status", "pending")->get();

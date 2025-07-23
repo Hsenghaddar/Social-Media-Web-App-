@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get("/posts/friends",[PostController::class,"friendsPosts"])->name("posts.friends");
     Route::post('posts', [PostController::class, 'store'])->name('posts.store');
-
+    
     Route::get('posts/{post}/edit', [PostController::class, 'edit'])
         ->middleware('can:update,post')->name('posts.edit');
     Route::put('posts/{post}', [PostController::class, 'update'])
@@ -51,7 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::post("/change/privacy",[AuthController::class,"changePrivacy"])->name("User.privacy");
     
 });
-Route::resource('posts', PostController::class)->only(['index', 'show']);
+Route::get("/posts/{post}",[PostController::class,"show"])->middleware("can:view,post")->name("posts.show");
+Route::resource('posts', PostController::class)->only(['index']);
 
 //Route by a specific user, by  a general condition
 //Specific Action, on a Specific Object, by a Specific User

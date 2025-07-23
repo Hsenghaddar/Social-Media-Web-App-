@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\Response;
 
 class PostPolicy
@@ -21,7 +22,16 @@ class PostPolicy
      */
     public function view(User $user, Post $post): bool
     {
-        return true; // Anyone can view individual posts
+        if(!$post->privacy){
+            return true;
+        }else if($post->privacy){
+            if(Auth::user()==$post->user || $post->user->friends->contains(Auth::user())){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
     }
 
     /**
