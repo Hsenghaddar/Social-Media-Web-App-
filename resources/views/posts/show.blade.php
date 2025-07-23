@@ -44,11 +44,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             @auth
-                                <button data-post-id="{{ $post->id }}" type="button"
-                                    class="like-btn btn {{ $post->isLikedBy(Auth::user()) ? 'btn-danger' : 'btn-outline-danger' }}">
-                                    <i class="fas fa-heart"></i>
-                                    <span>{{ $post->likes->count() }}</span><span> {{ Str::plural('like', $post->likes->count()) }}</span>
-                                </button>
+                                <livewire:LikePosts :post="$post"/>
                             @else
                                 <span class="btn btn-outline-secondary disabled me-3">
                                     <i class="fas fa-heart"></i>
@@ -226,31 +222,31 @@
                 });
             });
 
-            document.querySelectorAll('.like-btn').forEach(button => {
-                document.querySelectorAll('.like-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        // alert("Attempting to Like!");
-                        // console.log(this.dataset.postId);
-                        // console.log("{{ csrf_token() }}");//we can open this and echo php code like normal
-                        fetch(`/posts/${this.dataset.postId}/like`, {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json", //the format the request body is in.
-                                    "Accept": "application/json", //Please respond in JSON
-                                    "X-CSRF-TOKEN": "{{ csrf_token() }}" //When you’re logged into a Laravel app, it sets a CSRF token in your session, On every POST, PUT, DELETE, PATCH request, Laravel expects the same token sent back in the request headers.
-                                },
-                            })
-                            .then((response) => response.json())
-                            .then((result) => {
-                                this.classList.toggle(
-                                    "btn-danger") //if the class is found remove it else put it
-                                this.classList.toggle("btn-outline-danger")
-                                this.children[1].textContent = result.likes;
-                            })
-                            .catch((error) => console.log(error))
-                    });
-                });
-            });
+            // document.querySelectorAll('.like-btn').forEach(button => {
+            //     document.querySelectorAll('.like-btn').forEach(button => {
+            //         button.addEventListener('click', function() {
+            //             // alert("Attempting to Like!");
+            //             // console.log(this.dataset.postId);
+            //             // console.log("{{ csrf_token() }}");//we can open this and echo php code like normal
+            //             fetch(`/posts/${this.dataset.postId}/like`, {
+            //                     method: "POST",
+            //                     headers: {
+            //                         "Content-Type": "application/json", //the format the request body is in.
+            //                         "Accept": "application/json", //Please respond in JSON
+            //                         "X-CSRF-TOKEN": "{{ csrf_token() }}" //When you’re logged into a Laravel app, it sets a CSRF token in your session, On every POST, PUT, DELETE, PATCH request, Laravel expects the same token sent back in the request headers.
+            //                     },
+            //                 })
+            //                 .then((response) => response.json())
+            //                 .then((result) => {
+            //                     this.classList.toggle(
+            //                         "btn-danger") //if the class is found remove it else put it
+            //                     this.classList.toggle("btn-outline-danger")
+            //                     this.children[1].textContent = result.likes;
+            //                 })
+            //                 .catch((error) => console.log(error))
+            //         });
+            //     });
+            // });
         });
     </script>
 @endsection

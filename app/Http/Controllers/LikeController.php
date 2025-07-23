@@ -14,22 +14,4 @@ class LikeController extends Controller
     {
         $this->middleware('auth');
     }
-
-    public function toggle(Request $request, Post $post)
-    {
-        $like = $post->likes()->where('user_id', Auth::id())->first();
-
-        if ($like) {
-            $like->delete();
-            $liked=false;
-        } else {
-            $post->likes()->create(['user_id' => Auth::id()]);
-            $liked=true;
-        }
-
-        return response()->json([
-            "liked"=>$liked,
-            "likes"=>$post->likes()->count()
-        ]);;
-    }
 }
