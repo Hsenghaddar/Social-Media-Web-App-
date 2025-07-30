@@ -38,15 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])
         ->middleware('can:delete,comment')->name('comments.destroy');
 
-    // Like routes
-    Route::post('/posts/{post}/like', [LikeController::class, 'toggle'])->name('posts.like');
-
-    //friends routes
-    Route::post("/add/friend/{id}", [FriendsController::class, 'sendFriendRequest'])->name('Friend.add');
-    Route::post("/remove/friend/{id}", [FriendsController::class, 'removeFriendRequest'])->name('Friend.remove');
-    Route::post("/accept/friend/{id}", [FriendsController::class, 'acceptFriendRequest'])->name('Friend.accept');
-    Route::post("/reject/friend/{id}", [FriendsController::class, 'declineFriendRequest'])->name('Friend.decline');
-
     //privacy routes
     Route::post("/change/privacy",[AuthController::class,"changePrivacy"])->name("User.privacy");
     

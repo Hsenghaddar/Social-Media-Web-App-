@@ -85,35 +85,8 @@ class PostController extends Controller
     public function profile(string $id)
     {
         $user = User::findOrFail($id);
-        $isRequestSent = Friend::where('sender_id', Auth::id())->where('reciever_id', $user->id)->where("status","pending")->first();
-        if ($user == Auth::user()) {
-            $receivedRequests = Friend::where("reciever_id", Auth::id())->where("status", "pending")->get();
-            $sentRequests = Friend::where("sender_id", Auth::id())->where("status", "pending")->get();
-            $posts = $user->posts;
-            return view('posts.profile', [
-                "user" => $user,
-                "isRequestSent" => $isRequestSent,
-                "receivedRequests" => $receivedRequests,
-                "sentRequests" => $sentRequests,
-                "posts" => $posts
-            ]);
-        } else{
-            if ($user->friends->contains(Auth::user())) {
-                $posts = $user->posts;
-                return view('posts.profile', [
-                    "user" => $user,
-                    "isRequestSent" => $isRequestSent,
-                    "posts" => $posts
-                ]);
-            }else{
-                $posts=$user->posts->where("privacy",0);
-                return view('posts.profile', [
-                    "user" => $user,
-                    "isRequestSent" => $isRequestSent,
-                    "posts" => $posts
-                ]);
-            }
-        }   
+        return view("posts.profile",["user"=>$user]);
+        
     }
     public function friendsPosts()
     {
