@@ -33,7 +33,7 @@
                     <div class="row text-center">
                         @auth
                             @if (Auth::id() != $user->id)
-                                <livewire:FriendButton :user="$user"/>
+                                <livewire:FriendButton :user="$user" />
                             @endif
                         @endauth
                         <div class="col-6">
@@ -51,10 +51,10 @@
         </div>
         {{-- Friend Requests Section --}}
         @if (Auth::id() == $user->id)
-            <livewire:FriendRequests/>
+            <livewire:FriendRequests />
         @endif
-        <livewire:Friends :user="$user"/>
-        <livewire:posts :user="$user"/>
+        <livewire:Friends :user="$user" />
+        <livewire:posts :user="$user" />
     </div>
 @endsection
 @section('scripts')

@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
     @if (Auth::user()->isFriends($user))
         <div class="col-6 ">
-            <button wire:click="unFriend({{ $user->id }})" class="btn btn-m btn-primary">Unfriend</button>
+            <button wire:click="unFriend" class="btn btn-m btn-primary">Unfriend</button>
         </div>
     @elseif($isRequestSent)
         <div class="col-6">
@@ -14,7 +14,7 @@
         </div>
     @else
         <div class="col-6 ">
-            <button wire:click="addFriend({{ $user->id }})" class="btn btn-m btn-primary">Add Friend</button>
+            <button wire:click="addFriend" class="btn btn-m btn-primary">Add Friend</button>
         </div>
     @endif
 </div>
