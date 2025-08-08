@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -40,7 +41,9 @@ Route::middleware('auth')->group(function () {
 
     //privacy routes
     Route::post("/change/privacy",[AuthController::class,"changePrivacy"])->name("User.privacy");
-    
+    //notifications
+    Route::get("/notifications",[NotificationsController::class,"index"])->name("notifications");
+    Route::post("/notifications/clear",[NotificationsController::class,"clear"])->name("notifications.clear");
 });
 Route::get("/posts/{post}",[PostController::class,"show"])->middleware("can:view,post")->name("posts.show");
 Route::resource('posts', PostController::class)->only(['index']);

@@ -137,8 +137,6 @@
 @endsection
 
 
-
-
 @section('scripts')
     <script>
         // document.addEventListener('DOMContentLoaded', function() {
@@ -166,7 +164,7 @@
         //         });
         //     });
         // });
-
+        
         const switchInput = document.getElementById('privacySwitch');
         const statusText = document.getElementById('privacyStatus');
         statusText.textContent = switchInput.checked ? 'Private' : 'Public';

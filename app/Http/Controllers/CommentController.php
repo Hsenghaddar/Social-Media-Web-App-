@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserNotified;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -21,7 +22,11 @@ class CommentController extends Controller
             'content' => $request->content,
             'parent_id' => $request->parent_id
         ]);
-
+        if (Auth::id() != $post->user->id) {
+            $message = Auth::user()->name . " commented on your post";
+            $link = "/posts/" . $post->id;
+            event(new UserNotified($post->user, $message, $link));
+        }
         return back()->with('success', 'Comment added successfully!');
     }
 
