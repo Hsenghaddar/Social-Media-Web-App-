@@ -40,12 +40,13 @@ Route::middleware('auth')->group(function () {
         ->middleware('can:delete,comment')->name('comments.destroy');
 
     //privacy routes
-    Route::post("/change/privacy",[AuthController::class,"changePrivacy"])->name("User.privacy");
+    Route::put("/change/privacy",[AuthController::class,"changePrivacy"])->name("User.privacy");
     //notifications
     Route::get("/notifications",[NotificationsController::class,"index"])->name("notifications");
     Route::post("/notifications/clear",[NotificationsController::class,"clear"])->name("notifications.clear");
 });
 Route::get("/posts/{post}",[PostController::class,"show"])->middleware("can:view,post")->name("posts.show");
+Route::get("/media/{post}",[PostController::class,"getMedia"])->middleware("can:view,post")->name("posts.media");
 Route::resource('posts', PostController::class)->only(['index']);
 
 //Route by a specific user, by  a general condition

@@ -10,7 +10,7 @@
                     <h4 class="mb-0">Create New Post</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('posts.store') }}" method="POST">
+                    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">
@@ -20,8 +20,17 @@
                             @error('content')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">Share your thoughts with the community!</div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="media" class="form-label">Upload Image or Video (Optional)</label>
+                            <input class="form-control @error('media') is-invalid @enderror" type="file"
+                                name="media" accept="image/*,video/*">{{-- accept=frontend filter which helps user select correct files by only showing them, but can be bypassed --}}
+                            @error('media')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
 
                         <div class="d-flex justify-content-between">
                             <div class="d-flex gap-2">

@@ -71,7 +71,7 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
     public function changePrivacy(Request $request){
-        $user=User::find(Auth::id());
+        $user=Auth::user();
         $user->private=$request->has('privacy');;
         if($user->private){
             $message="privacy set to private";

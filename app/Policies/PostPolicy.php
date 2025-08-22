@@ -22,15 +22,7 @@ class PostPolicy
      */
     public function view(?User $user, Post $post): bool
     {
-        if(!$post->privacy){
-            return true;
-        }else if($post->privacy){
-            if(Auth::user()==$post->user || $post->user->friends->contains(Auth::user())){
-                return true;
-            }else{
-                return false;
-            }
-        }
+        return Auth::user()==$post->user || $post->user->friends->contains(Auth::user()) || !$post->privacy;
         return false;
     }
 

@@ -19,7 +19,7 @@
                             </label>
                             <form action="{{ route('User.privacy') }}" method="POST">
                                 @csrf
-
+                                @method("PUT")
                                 <div class="form-check form-switch d-flex justify-content-center align-items-center gap-2">
                                     <input name="privacy" class="form-check-input" type="checkbox" role="switch"
                                         id="privacySwitch" {{ $user->private ? 'checked' : '' }}>

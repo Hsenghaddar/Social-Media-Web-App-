@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
-    protected $fillable = ['content', 'user_id',"privacy"];
+    protected $fillable = ['content', 'user_id',"privacy","media_path","media_mime","media_type"];
 
     public function user(): BelongsTo
     {

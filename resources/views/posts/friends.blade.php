@@ -8,12 +8,22 @@
             @auth
                 <div class="card mb-4">
                     <div class="card-body">
-                        <form action="{{ route('posts.store') }}" method="POST">
+                        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="3"
-                                    placeholder="What's on your mind?" required>{{ old('content') }}</textarea>
+                                <label for="content" class="form-label">What's on your mind?</label>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="5"
+                                    required>{{ old('content') }}</textarea>
                                 @error('content')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="media" class="form-label">Upload Image or Video (Optional)</label>
+                                <input class="form-control @error('media') is-invalid @enderror" type="file" name="media"
+                                    accept="image/*,video/*">{{-- accept=frontend filter which helps user select correct files by only showing them, but can be bypassed --}}
+                                @error('media')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -30,7 +40,7 @@
                 </div>
             @endauth
 
-            <h4>Recent Posts</h4>
+            <h4>Posts</h4>
             @foreach ($friends as $friend)
                 @foreach ($friend->posts as $post)
                     <div class="card mb-3">
@@ -70,7 +80,9 @@
                             </div>
 
                             <p class="card-text">{{ $post->content }}</p>
-
+                            @if ($post->media_type == 'image')
+                                <img width="100%" src="{{ route('posts.media', $post) }}" alt="">
+                            @endif
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
                                     @auth
